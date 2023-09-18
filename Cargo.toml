@@ -7,3 +7,5 @@ edition = "2021"
 
 [dependencies]
 bevy = "0.11.2"
+bevy_rapier2d = { version = "*", features = [ "simd-stable", "debug-render-2d" ] }
+
