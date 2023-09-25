@@ -8,17 +8,17 @@ fn main() {
         .add_systems(Startup, setup_graphics)
         .add_systems(Startup, setup_physics)
         .add_systems(Update, print_position_system)
-        .add_systems(Update, print_keyboard_event_system)
+        //.add_systems(Update, print_keyboard_event_system)
         .run();
 }
 
 
-/// This system prints out all keyboard events as they come in
-fn print_keyboard_event_system(mut keyboard_input_events: EventReader<KeyboardInput>) {
-    for event in keyboard_input_events {
-        info!("{:?}", event);
-    }
-}
+// /// This system prints out all keyboard events as they come in
+// fn print_keyboard_event_system(mut keyboard_input_events: EventReader<KeyboardInput>) {
+//     for event in keyboard_input_events {
+//         info!("{:?}", event);
+//     }
+// }
 
 fn keyboard_input(
     keys: Res<Input<KeyCode>>,
