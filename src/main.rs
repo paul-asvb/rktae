@@ -1,5 +1,6 @@
-use bevy::{prelude::*, input::keyboard::KeyboardInput};
+use bevy::{input::keyboard::KeyboardInput, prelude::*};
 use bevy_rapier2d::prelude::*;
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
@@ -8,10 +9,9 @@ fn main() {
         .add_systems(Startup, setup_graphics)
         .add_systems(Startup, setup_physics)
         .add_systems(Update, print_position_system)
-        //.add_systems(Update, print_keyboard_event_system)
+        .add_systems(Update, keyboard_input)
         .run();
 }
-
 
 // /// This system prints out all keyboard events as they come in
 // fn print_keyboard_event_system(mut keyboard_input_events: EventReader<KeyboardInput>) {
@@ -20,11 +20,16 @@ fn main() {
 //     }
 // }
 
-fn keyboard_input(
-    keys: Res<Input<KeyCode>>,
-) {
+fn keyboard_input(keys: Res<Input<KeyCode>>) {
+    if keys.pressed(KeyCode::Left) {
+        println!("left");
+    }
+    if keys.pressed(KeyCode::Right) {
+        println!("right");
+    }
     if keys.just_pressed(KeyCode::Space) {
         // Space was pressed
+        println!("space");
     }
 }
 
