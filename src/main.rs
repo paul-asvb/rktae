@@ -63,3 +63,22 @@ fn print_position_system(query: Query<&Position>) {
         println!("position: {} {}", position.x, position.y);
     }
 }
+
+#[derive(Copy, Clone, Debug, PartialEq)]
+pub enum Rocket {
+    Left,
+    Middle,
+    Right,
+}
+impl Rocket {
+    /// Checks if a key that corresponds to this direction has been pressed
+    pub fn key_just_pressed(&self, input: &Input<KeyCode>) -> bool {
+        let keys = match self {
+            Rocket::Left => [KeyCode::Left, KeyCode::J],
+            Rocket::Right => [KeyCode::Right, KeyCode::K],
+            Rocket::Middle => [KeyCode::Right, KeyCode::K],
+        };
+
+        keys.iter().any(|code| input.just_pressed(*code))
+    }
+}
