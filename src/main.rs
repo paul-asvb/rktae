@@ -26,12 +26,12 @@ fn setup_physics(mut commands: Commands) {
     /* Create the bouncing ball. */
     commands
         .spawn(RigidBody::Dynamic)
-        .insert(Collider::triangle( Vec2::new(100.0, 2.0), Vec2::new(100.0, 2.0), Vec2::new(100.0, 2.0)))
+        .insert(Collider::ball(10.5))
         .insert(Restitution::coefficient(1.7))
         .insert(TransformBundle::from(Transform::from_xyz(0.0, 400.0, 0.0)))
-        .insert(ExternalForce {
-            force: Vec2::new(10.0, 20.0),
-            torque: 140.0,
+        .insert(ExternalImpulse {
+            impulse: Vec2::new(1.0, 2.0),
+            torque_impulse: 0.0,
         });
 }
 
