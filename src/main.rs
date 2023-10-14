@@ -9,6 +9,7 @@ fn main() {
         .add_systems(Startup, setup_graphics)
         .add_systems(Startup, setup_physics)
         .add_systems(Update, print_position_system)
+        .add_systems(Update, keyboard_input)
         .run();
 }
 
@@ -27,6 +28,7 @@ fn setup_physics(mut commands: Commands) {
     commands
         .spawn(RigidBody::Dynamic)
         .insert(Collider::ball(10.5))
+        .insert(ColliderMassProperties::Density(2.0))
         .insert(Restitution::coefficient(1.7))
         .insert(TransformBundle::from(Transform::from_xyz(0.0, 400.0, 0.0)))
         .insert(ExternalImpulse {
@@ -47,21 +49,29 @@ fn print_position_system(query: Query<&Position>) {
     }
 }
 
-#[derive(Copy, Clone, Debug, PartialEq)]
-pub enum Rocket {
-    Left,
-    Middle,
-    Right,
-}
-impl Rocket {
-    /// Checks if a key that corresponds to this direction has been pressed
-    pub fn key_just_pressed(&self, input: &Input<KeyCode>) -> bool {
-        let keys = match self {
-            Rocket::Left => [KeyCode::Left, KeyCode::J],
-            Rocket::Right => [KeyCode::Right, KeyCode::K],
-            Rocket::Middle => [KeyCode::Right, KeyCode::K],
-        };
+fn keyboard_input(keys: Res<Input<KeyCode>>, mut mm: Query<&mut ExternalImpulse>) {
+    if keys.just_pressed(KeyCode::Space) {
 
-        keys.iter().any(|code| input.just_pressed(*code))
+        // Space was pressed
+    }
+    if keys.just_released(KeyCode::B) {
+        // Left Ctrl was released
+    }
+    if keys.pressed(KeyCode::Left) {
+        for mut position in mm.iter_mut() {
+            position.impulse = Vec2::new(-0.1, 0.0);
+        }
+    }
+    if keys.pressed(KeyCode::Right) {
+        for mut position in mm.iter_mut() {
+            position.impulse = Vec2::new(0.1, 0.0);
+        }
+    }
+    // we can check multiple at once with `.any_*`
+    if keys.any_pressed([KeyCode::M, KeyCode::K]) {
+        // Either the left or right shift are being held down
+    }
+    if keys.any_just_pressed([KeyCode::Delete, KeyCode::Back]) {
+        // Either delete or backspace was just pressed
     }
 }
