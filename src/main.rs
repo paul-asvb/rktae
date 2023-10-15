@@ -32,7 +32,7 @@ fn setup_physics(mut commands: Commands) {
         .insert(Restitution::coefficient(1.7))
         .insert(TransformBundle::from(Transform::from_xyz(0.0, 400.0, 0.0)))
         .insert(ExternalImpulse {
-            impulse: Vec2::new(1.0, 2.0),
+            impulse: Vec2::new(0.0, 0.0),
             torque_impulse: 0.0,
         });
 }
@@ -59,12 +59,15 @@ fn keyboard_input(keys: Res<Input<KeyCode>>, mut mm: Query<&mut ExternalImpulse>
     }
     if keys.pressed(KeyCode::Left) {
         for mut position in mm.iter_mut() {
-            position.impulse = Vec2::new(-0.1, 0.0);
+            position.impulse = Vec2::new(-0.5, 1.0);
+            position.torque_impulse = 0.0001;
         }
     }
     if keys.pressed(KeyCode::Right) {
         for mut position in mm.iter_mut() {
-            position.impulse = Vec2::new(0.1, 0.0);
+            position.impulse = Vec2::new(0.5, 1.0);
+            position.torque_impulse = -0.0001;
+
         }
     }
     // we can check multiple at once with `.any_*`
