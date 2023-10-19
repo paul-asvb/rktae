@@ -51,11 +51,8 @@ fn print_position_system(query: Query<&Position>) {
 
 fn keyboard_input(keys: Res<Input<KeyCode>>, mut mm: Query<&mut ExternalForce>) {
     if keys.just_pressed(KeyCode::Space) {
-
-        // Space was pressed
     }
     if keys.just_released(KeyCode::B) {
-        // Left Ctrl was released
     }
     if keys.pressed(KeyCode::Left) {
         for mut position in mm.iter_mut() {
@@ -67,11 +64,8 @@ fn keyboard_input(keys: Res<Input<KeyCode>>, mut mm: Query<&mut ExternalForce>) 
             position.force = Vec2::new(0.5, 1.0);
         }
     }
-    // we can check multiple at once with `.any_*`
     if keys.any_pressed([KeyCode::M, KeyCode::K]) {
-        // Either the left or right shift are being held down
     }
     if keys.any_just_pressed([KeyCode::Delete, KeyCode::Back]) {
-        // Either delete or backspace was just pressed
     }
 }
