@@ -50,10 +50,6 @@ fn print_position_system(query: Query<&Position>) {
 }
 
 fn keyboard_input(keys: Res<Input<KeyCode>>, mut mm: Query<&mut ExternalForce>) {
-    if keys.just_pressed(KeyCode::Space) {
-    }
-    if keys.just_released(KeyCode::B) {
-    }
     if keys.pressed(KeyCode::Left) {
         for mut position in mm.iter_mut() {
             position.force = Vec2::new(-0.1, 0.8);
@@ -63,9 +59,5 @@ fn keyboard_input(keys: Res<Input<KeyCode>>, mut mm: Query<&mut ExternalForce>) 
         for mut position in mm.iter_mut() {
             position.force = Vec2::new(0.5, 1.0);
         }
-    }
-    if keys.any_pressed([KeyCode::M, KeyCode::K]) {
-    }
-    if keys.any_just_pressed([KeyCode::Delete, KeyCode::Back]) {
     }
 }
